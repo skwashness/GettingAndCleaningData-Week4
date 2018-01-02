@@ -1,0 +1,61 @@
+## Data Sources
+
+Downloaded from: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+The following files were used:
+
+1. X_train.txt -- contains the 561 variables/features by subject and activity (train data). 7352 observations
+2. y_train.txt -- contains numeric listing of each activity (1-6) (train data) for each observation
+3. subject.train -- contains listing of each subject (1-30) (train data) corresponding to each observation
+
+4. X_test.txt -- contains the 561 variables/features by subject and activity (test data). 2947 observations
+5. y_test.txt -- contains numeric listing of each activity (1-6) (test data) for each observation
+6. subject.test -- contains listing of each subject (1-30) (test data)  corresponding to each observation
+
+7. activity_labels.txt -- contains named activities (i.e. STANDING, WALKING etc.) for both train and test data
+8. features.txt -- contains names of variables/features of each activity, of which there are 561.
+
+## Data Set Information
+
+The data records 30 volunteers performing 6 activities over a period of time. The activities were recorded while wearing a Samsung Galaxy SII smartphone on the waist and are:
+I.   WALKING
+II.  WALKING_UPSTAIRS
+III. WALKING_DOWNSTAIRS
+IV.  SITTING
+V.   STANDING
+VI.  LAYING
+
+Each activity was video recorded and the data was labeled manually, capturing 3-axial linear acceleration and 3-axial angular velocity at a constate rate of 50Hz. The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain.
+
+
+## Work performed on the data
+
+In this dataset, the train and test observations were combined, and each observation represents an indvidual subject and the corresponding activity they performed.
+
+I combined the X_train, y_train and subject datasets, as well as incorporated the activity labels and features. In addition, I combined the train and test data, and performed the aggregation by activity and subject.
+
+## Atribute Inforamtion
+
+The following code summarizes the attributes in my tidy dataset, including the class type and mean of each attribute
+
+
+combined.tidy <- read.table("tidy.data.txt")
+make.codeBook <- function(set) {
+      df <- data.frame(
+            row.names = NULL,
+            column.names = names(set),
+            class = sapply(set, class),
+            mean = sapply(set, function(x)
+                  if (class(x) == "numeric")
+                        mean(x)
+                  else
+                        "Not available")
+      )
+      write.table(df, "codeBook.att.rmd", sep = " | ")
+      return(df)
+}
+make.codeBook(combined.tidy)
+
+
+
+
